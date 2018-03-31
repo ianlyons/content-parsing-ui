@@ -12,7 +12,7 @@ class App extends Component {
 
   async componentDidMount() {
     try {
-      const { articles } = await newsAPI.get();
+      const { articles } = await newsAPI.getEverything('a');
       this.setState({
         error: null,
         articles,

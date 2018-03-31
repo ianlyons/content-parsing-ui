@@ -22,12 +22,14 @@ export const BaseRequest = (url, params, opts = {}) => {
   return new Request(`${baseUrl}${url}?${qs.stringify(params)}`, allOpts);
 };
 
-export const get = (params = {}) => {
+export const getEverything = (query, params = {}) => {
   const allParams = Object.assign(
     {
       pageSize: 100,
       page: 1,
-      country: 'us',
+      q: query,
+      language: 'en',
+      sortBy: 'popularity',
     },
     params
   );

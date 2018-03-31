@@ -1,21 +1,35 @@
 .Article {
-  width: 200px;
-  height: 100px;
+  width: 150px;
+  height: 80px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 8px;
   border: solid #dadada 1px;
   border-radius: 3px;
 }
 
+.Article-contentWrapper {
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Article-footer {
+  background-color: #fafafa;
+  width: 100%;
+  padding: 3px;
+  font-size: 8px;
+}
+
 .Article-headline {
   font-weight: 300;
-  font-size: 12px;
+  font-size: 10px;
   color: #4a4a4a;
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
 .Article-link {
   color: #3f87a6;
+  text-decoration: none;
 }

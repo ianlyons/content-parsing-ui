@@ -4,13 +4,15 @@ import './Article.css';
 
 export default class Article extends React.Component {
   render() {
-    const { headline, url } = this.props;
+    const { headline, url, source } = this.props;
     return (
       <article className="Article">
-        <h4 className="Article-headline">{headline}&nbsp;</h4>
-        <a className="Article-link" href={url} target="_blank">
-          &#xe164;
-        </a>
+        <div className="Article-contentWrapper">
+          <a className="Article-link" href={url} target="_blank">
+            <h4 className="Article-headline">{headline}&nbsp;</h4>
+          </a>
+        </div>
+        <footer className="Article-footer">{source}</footer>
       </article>
     );
   }
@@ -19,4 +21,5 @@ export default class Article extends React.Component {
 Article.propTypes = {
   headline: PropTypes.string,
   url: PropTypes.string,
+  source: PropTypes.string,
 };

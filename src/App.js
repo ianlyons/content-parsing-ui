@@ -56,7 +56,12 @@ class App extends Component {
           {this.state.articles && (
             <div className="App-articlesWrapper">
               {this.state.articles.map((article, i) => (
-                <Article key={i} headline={article.title} url={article.url} />
+                <Article
+                  key={i}
+                  source={article.source.name}
+                  headline={article.title}
+                  url={article.url}
+                />
               ))}
             </div>
           )}

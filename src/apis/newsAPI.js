@@ -1,4 +1,5 @@
 import * as qs from 'querystring';
+import * as _ from 'lodash';
 
 const baseUrl = 'https://newsapi.org/v2';
 
@@ -32,6 +33,18 @@ export const getEverything = (query, params = {}) => {
     },
     params
   );
+
+  // We want sources/domains to go up as a comma-separated list
+  if (_.isArray(allParams.sources)) {
+    allParams.sources = allParams.sources.join(',');
+  }
+
+  if (_.isArray(allParams.domains)) {
+    allParams.domain = allParams.domain.join(',');
+  }
+
+  console.info(`Querying with params: ${JSON.stringify(allParams, undefined, 2)}`);
+
   const req = BaseRequest('/everything', allParams);
   return fetch(req).then(res => res.json());
 };

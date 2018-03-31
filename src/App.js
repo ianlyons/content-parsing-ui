@@ -87,7 +87,7 @@ class App extends Component {
               onChange={this.updateQueryConfig}
               labelLeft="Localized"
               labelRight="Global"
-              id="geographic"
+              id="geography"
             />
           </div>
         </header>

@@ -24,6 +24,6 @@ export default class Slider extends React.Component {
 Slider.propTypes = {
   onChange: PropTypes.func,
   labelLeft: PropTypes.string,
-  labelLeft: PropTypes.string,
+  labelRight: PropTypes.string,
   id: PropTypes.string,
 };

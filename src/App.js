@@ -1,8 +1,30 @@
 import React, { Component } from 'react';
 import Slider from './components/Slider/Slider';
+import Article from './components/Article/Article';
+import * as newsAPI from './apis/newsAPI';
 import './App.css';
 
 class App extends Component {
+  state = {
+    articles: [],
+    error: null,
+  };
+
+  async componentDidMount() {
+    try {
+      const { articles } = await newsAPI.get();
+      this.setState({
+        error: null,
+        articles,
+      });
+    } catch (err) {
+      this.setState({
+        articles: [],
+        error: 'There was an error loading the articles.',
+      });
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -29,9 +51,16 @@ class App extends Component {
             />
           </div>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div className="App-body">
+          {this.state.error && <div className="App-loadingError">{this.state.error}</div>}
+          {this.state.articles && (
+            <div className="App-articlesWrapper">
+              {this.state.articles.map((article, i) => (
+                <Article key={i} headline={article.title} url={article.url} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     );
   }

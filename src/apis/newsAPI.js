@@ -29,7 +29,6 @@ export const getEverything = (query, params = {}) => {
       page: 1,
       q: query,
       language: 'en',
-      sortBy: 'popularity',
     },
     params
   );

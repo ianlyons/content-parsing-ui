@@ -26,7 +26,8 @@ export const BaseRequest = (url, params, opts = {}) => {
 export const getEverything = (query, params = {}) => {
   const allParams = Object.assign(
     {
-      pageSize: 100,
+      // we need a number divisible by 6, because that's how many articles we have per row
+      pageSize: 96,
       page: 1,
       q: query,
       language: 'en',

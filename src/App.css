@@ -10,10 +10,12 @@
 
 .App-title {
   font-size: 1.5em;
+  margin-bottom: 0;
 }
 
-.App-intro {
-  font-size: large;
+.App-attribution {
+  font-size: 10px;
+  margin-bottom: 25px;
 }
 
 .App-configWrapper {
@@ -30,7 +32,7 @@
 }
 
 .App-articlesWrapper {
-  width: 90%;
+  width: 975px; /* we want 6 across, plus the 15px of margin * 5 */
   margin: 0 auto;
   text-align: center;
   margin-top: 25px;
@@ -38,8 +40,10 @@
 
 .App-articlesWrapper > * {
   float: left;
+  margin-bottom: 15px;
 }
 
-.App-articlesWrapper > *:not(:last-child) {
-  margin: 0 15px 15px 0;
+/* we don't want right margin on the last child in every row of 6 */
+.App-articlesWrapper > *:not(:nth-child(6n)) {
+  margin-right: 15px;
 }

@@ -24,6 +24,8 @@ export const BaseRequest = (url, params, opts = {}) => {
 };
 
 export const getEverything = (query, params = {}) => {
+  const yesterdayDate = new Date();
+  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
   const allParams = Object.assign(
     {
       // we need a number divisible by 6, because that's how many articles we have per row
@@ -31,6 +33,7 @@ export const getEverything = (query, params = {}) => {
       page: 1,
       q: query,
       language: 'en',
+      from: yesterdayDate.toISOString(),
     },
     params
   );

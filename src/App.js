@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import * as _ from 'lodash';
 import Slider from './components/Slider/Slider';
 import Article from './components/Article/Article';
+import LoginButton from './components/LoginButton/LoginButton';
 import * as newsAPI from './apis/newsAPI';
+import * as facebookAPI from './apis/facebookAPI';
 import * as newsQueryUtils from './utils/newsQueryUtils';
 import loadingGif from './pie-chart-loading.gif';
 import './App.css';
@@ -33,6 +35,14 @@ class App extends Component {
         loading: false,
       });
     }
+
+    const loginStatus = await facebookAPI.getLoginStatus();
+    console.log(loginStatus);
+    const likes = await facebookAPI.getAllLikes(
+      loginStatus.authResponse.userID,
+      loginStatus.authResponse.accessToken
+    );
+    console.log('likes is: ', likes);
   }
 
   updateQueryConfig = e => {
@@ -88,6 +98,7 @@ class App extends Component {
                 NewsAPI.org
               </a>
             </span>
+            <LoginButton />
           </div>
           <div className="App-configWrapper">
             <Slider
@@ -111,24 +122,27 @@ class App extends Component {
           </div>
         </header>
         <div className="App-body">
-          {this.state.loading && (
-            <div className="App-loading">
-              <img src={loadingGif} alt="" />
-            </div>
-          )}
-          {this.state.error && <div className="App-loadingError">{this.state.error}</div>}
-          {this.state.articles && (
-            <div className="App-articlesWrapper">
-              {this.state.articles.map((article, i) => (
-                <Article
-                  key={i}
-                  source={article.source.name}
-                  headline={article.title}
-                  url={article.url}
-                />
-              ))}
-            </div>
-          )}
+          <div className="App-sidebarWrapper" />
+          <div className="App-contentWrapper">
+            {this.state.loading && (
+              <div className="App-loading">
+                <img src={loadingGif} alt="" />
+              </div>
+            )}
+            {this.state.error && <div className="App-loadingError">{this.state.error}</div>}
+            {this.state.articles && (
+              <div className="App-articlesWrapper">
+                {this.state.articles.map((article, i) => (
+                  <Article
+                    key={i}
+                    source={article.source.name}
+                    headline={article.title}
+                    url={article.url}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );

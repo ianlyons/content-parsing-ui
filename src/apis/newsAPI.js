@@ -9,7 +9,7 @@ const baseUrl = 'https://newsapi.org/v2';
  * @param {*} params - Query parameters.
  * @param {*} opts - Options or overrides to be passed to the request object.
  */
-export const BaseRequest = (url, params, opts = {}) => {
+export const baseRequest = (url, params, opts = {}) => {
   // Set up authentication so consumers of this don't need to worry about it. Can be overridden
   // by the passed-in params.
   const allOpts = Object.assign(
@@ -20,7 +20,8 @@ export const BaseRequest = (url, params, opts = {}) => {
     },
     opts
   );
-  return new Request(`${baseUrl}${url}?${qs.stringify(params)}`, allOpts);
+  const req = new Request(`${baseUrl}${url}?${qs.stringify(params)}`, allOpts);
+  return fetch(req).then(res => res.json(), err => err.json());
 };
 
 export const getEverything = (query, params = {}) => {
@@ -49,6 +50,17 @@ export const getEverything = (query, params = {}) => {
 
   console.info(`Querying with params: ${JSON.stringify(allParams, undefined, 2)}`);
 
-  const req = BaseRequest('/everything', allParams);
-  return fetch(req).then(res => res.json());
+  return baseRequest('/everything', allParams);
+};
+
+export const getSources = (params = {}) => {
+  const allParams = Object.assign(
+    {
+      country: 'us',
+      language: 'en',
+    },
+    params
+  );
+
+  return baseRequest(`/sources`, allParams);
 };

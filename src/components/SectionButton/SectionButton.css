@@ -1,0 +1,12 @@
+.SectionButton {
+  border: 0;
+  font-size: 14px;
+  border-radius: 3px;
+  padding: 4px 6px;
+  border: solid blue 1px;
+}
+
+.SectionButton.is-active {
+  background-color: blue;
+  color: white;
+}

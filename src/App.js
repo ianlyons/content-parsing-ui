@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import * as _ from 'lodash';
-import Slider from './components/Slider/Slider';
-import Article from './components/Article/Article';
+import SectionButton from './components/SectionButton/SectionButton';
 import LoginButton from './components/LoginButton/LoginButton';
+import PublisherContainer from './containers/PublisherContainer';
+import PersonalizationContainer from './containers/PersonalizationContainer';
 import * as newsAPI from './apis/newsAPI';
 import * as facebookAPI from './apis/facebookAPI';
 import * as newsQueryUtils from './utils/newsQueryUtils';
@@ -11,6 +12,7 @@ import './App.css';
 
 class App extends Component {
   state = {
+    view: 'publisher',
     loading: false,
     articles: [],
     error: null,
@@ -42,7 +44,17 @@ class App extends Component {
       loginStatus.authResponse.userID,
       loginStatus.authResponse.accessToken
     );
-    console.log('likes is: ', likes);
+
+    window.likes = likes;
+
+    const { sources } = await newsAPI.getSources();
+    _.map(sources, source => {
+      _.map(likes, like => {
+        if (like.name.toLowerCase() === source.name.toLowerCase()) {
+          console.log(`${like.name} matched!!11`);
+        }
+      });
+    });
   }
 
   updateQueryConfig = e => {
@@ -100,48 +112,23 @@ class App extends Component {
             </span>
             <LoginButton />
           </div>
-          <div className="App-configWrapper">
-            <Slider
-              onChange={this.updateQueryConfig}
-              labelLeft="Non-traditional publisher"
-              labelRight="Traditional publisher"
-              id="publisherType"
-            />
-            <Slider
-              onChange={this.updateQueryConfig}
-              labelLeft="Personalization algorithms"
-              labelRight="Human editors"
-              id="personalization"
-            />
-            <Slider
-              onChange={this.updateQueryConfig}
-              labelLeft="Localized"
-              labelRight="Global"
-              id="geography"
-            />
-          </div>
         </header>
         <div className="App-body">
-          <div className="App-sidebarWrapper" />
+          <nav className="App-nav">
+            <SectionButton
+              isActive={this.state.view === 'publisher'}
+              onClick={() => this.setState({ view: 'publisher' })}
+              text="Traditional/non-traditional publisher"
+            />
+            <SectionButton
+              isActive={this.state.view === 'personalization'}
+              onClick={() => this.setState({ view: 'personalization' })}
+              text="Personalization algorithms/human editors"
+            />
+          </nav>
           <div className="App-contentWrapper">
-            {this.state.loading && (
-              <div className="App-loading">
-                <img src={loadingGif} alt="" />
-              </div>
-            )}
-            {this.state.error && <div className="App-loadingError">{this.state.error}</div>}
-            {this.state.articles && (
-              <div className="App-articlesWrapper">
-                {this.state.articles.map((article, i) => (
-                  <Article
-                    key={i}
-                    source={article.source.name}
-                    headline={article.title}
-                    url={article.url}
-                  />
-                ))}
-              </div>
-            )}
+            {this.state.view === 'publisher' && <PublisherContainer />}
+            {this.state.view === 'personalization' && <PersonalizationContainer />}
           </div>
         </div>
       </div>

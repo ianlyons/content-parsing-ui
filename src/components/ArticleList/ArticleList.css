@@ -1,0 +1,16 @@
+.ArticleList {
+  width: 975px; /* we want 6 across, plus the 15px of margin * 5 */
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 25px;
+}
+
+.ArticleList > * {
+  float: left;
+  margin-bottom: 15px;
+}
+
+/* we don't want right margin on the last child in every row of 6 */
+.ArticleList > *:not(:nth-child(6n)) {
+  margin-right: 15px;
+}

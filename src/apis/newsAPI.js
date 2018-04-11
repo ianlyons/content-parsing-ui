@@ -27,13 +27,16 @@ export const baseRequest = (url, params, opts = {}) => {
 export const getHeadlines = (params = {}) => {
   const allParams = Object.assign(
     {
-      // we need a number divisible by 6, because that's how many articles we have per row
-      pageSize: 40,
-      page: 1,
+      pageSize: 30,
       sources: [],
     },
     params
   );
+
+  if (_.isArray(allParams.sources)) {
+    allParams.sources = allParams.sources.join(',');
+  }
+
   return baseRequest('/top-headlines', allParams);
 };
 
@@ -42,8 +45,7 @@ export const getEverything = (query, params = {}) => {
   yesterdayDate.setDate(yesterdayDate.getDate() - 1);
   const allParams = Object.assign(
     {
-      // we need a number divisible by 6, because that's how many articles we have per row
-      pageSize: 96,
+      pageSize: 30,
       page: 1,
       q: query,
       language: 'en',

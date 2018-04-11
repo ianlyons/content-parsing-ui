@@ -1,10 +1,17 @@
 import * as React from 'react';
 import Article from '../Article/Article';
+import './ArticleList.css';
 
 const ArticleList = ({ articles }) => (
-  <div className="ArticleList">
+  <div className="ArticleList cf">
     {articles.map((article, i) => (
-      <Article key={i} source={article.source.name} headline={article.title} url={article.url} />
+      <Article
+        key={i}
+        imgSrc={article.urlToImage}
+        source={article.source.name}
+        headline={article.title}
+        url={article.url}
+      />
     ))}
   </div>
 );

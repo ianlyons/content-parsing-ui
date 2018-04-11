@@ -1,6 +1,6 @@
 .Article {
-  width: 150px;
-  height: 80px;
+  width: 250px;
+  height: 130px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,6 +14,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-size: cover;
+  width: 100%;
 }
 
 .Article-footer {
@@ -25,12 +27,14 @@
 
 .Article-headline {
   font-weight: 300;
-  font-size: 10px;
-  color: #4a4a4a;
+  font-size: 15px;
+  color: white;
+  text-shadow: 1px 1px 3px #4d4d4d;
   margin-right: 10px;
 }
 
 .Article-link {
   color: #3f87a6;
   text-decoration: none;
+  width: 100%;
 }

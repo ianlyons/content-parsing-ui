@@ -19,7 +19,7 @@ export default class PublisherContainer extends React.Component {
     try {
       const [tradRes, nonTradRes] = await Promise.all([
         newsAPI.getEverything('a'),
-        newsAPI.getHeadlines({ sources: ['usa-today'] }),
+        newsAPI.getHeadlines({ sources: ['usa-today', 'the-new-york-times', 'nbc-news'] }),
       ]);
 
       this.setState({

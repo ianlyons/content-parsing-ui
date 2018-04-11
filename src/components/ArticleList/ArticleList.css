@@ -1,5 +1,5 @@
 .ArticleList {
-  width: 975px; /* we want 6 across, plus the 15px of margin * 5 */
+  width: 350px;
   margin: 0 auto;
   text-align: center;
   margin-top: 25px;
@@ -10,7 +10,17 @@
   margin-bottom: 15px;
 }
 
-/* we don't want right margin on the last child in every row of 6 */
-.ArticleList > *:not(:nth-child(6n)) {
+/* we don't want right margin on the last child in every row of 2 */
+.ArticleList > *:not(:nth-child(2n)) {
   margin-right: 15px;
+}
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
 }

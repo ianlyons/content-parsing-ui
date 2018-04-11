@@ -24,6 +24,19 @@ export const baseRequest = (url, params, opts = {}) => {
   return fetch(req).then(res => res.json(), err => err.json());
 };
 
+export const getHeadlines = (params = {}) => {
+  const allParams = Object.assign(
+    {
+      // we need a number divisible by 6, because that's how many articles we have per row
+      pageSize: 40,
+      page: 1,
+      sources: [],
+    },
+    params
+  );
+  return baseRequest('/top-headlines', allParams);
+};
+
 export const getEverything = (query, params = {}) => {
   const yesterdayDate = new Date();
   yesterdayDate.setDate(yesterdayDate.getDate() - 1);

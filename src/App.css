@@ -19,5 +19,7 @@
 }
 
 .App-nav {
+  padding: 10px;
   width: 100%;
+  border-bottom: solid grey 1px;
 }

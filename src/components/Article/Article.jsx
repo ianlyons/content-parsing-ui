@@ -16,7 +16,7 @@ const getStyle = (url) => {
 export default class Article extends React.Component {
   render() {
     const { imgSrc, headline, url, source } = this.props;
-    console.log(this.props)
+    
     return (
       <article className="Article">
         <div className="Article-contentWrapper" style={getStyle(imgSrc)}>

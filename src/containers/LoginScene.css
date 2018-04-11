@@ -1,0 +1,9 @@
+.LoginScene {
+  border: solid grey 1px;
+  border-radius: 3px;
+  padding: 15px;
+}
+
+.LoginScene-prompt {
+  margin-bottom: 15px;
+}

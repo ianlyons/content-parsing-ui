@@ -2,7 +2,9 @@ import baseRequest from './baseRequest';
 
 export const getLoginStatus = () => {
   return new Promise((resolve, reject) => {
-    window.FB.getLoginStatus(resolve, reject);
+    setTimeout(() => {
+      window.FB.getLoginStatus(resolve, reject);
+    }, 100);
   });
 };
 

@@ -19,7 +19,7 @@ class App extends Component {
               Content provided by&nbsp;
               <a href="https://newsapi.org" rel="noopener noreferrer" target="_blank">
                 NewsAPI.org
-              </a>
+              </a>.
             </span>
           </div>
         </header>

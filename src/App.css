@@ -23,3 +23,7 @@
   width: 100%;
   border-bottom: solid grey 1px;
 }
+
+.App-nav > *:first-child {
+  margin-right: 5px;
+}

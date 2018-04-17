@@ -1,9 +1,6 @@
 import * as React from 'react';
 import FacebookLogin from 'react-facebook-login';
-import LoginButton from '../components/LoginButton/LoginButton';
 import './LoginScene.css';
-
-console.log(FacebookLogin);
 
 export default class LoginScene extends React.Component {
   render() {

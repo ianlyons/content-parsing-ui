@@ -1,11 +1,20 @@
 import baseRequest from './baseRequest';
 
+const getLoginStatusBody = (resolve, reject) => {
+  window.FB.getLoginStatus(resolve, reject);
+};
+
+const pollForLoginStatus = (resolve, reject) => {
+  if (!window.FB) {
+    console.log('Facebook script not loaded... re-polling.');
+    setTimeout(() => pollForLoginStatus(resolve, reject), 100);
+  } else {
+    getLoginStatusBody(resolve, reject);
+  }
+};
+
 export const getLoginStatus = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      window.FB.getLoginStatus(resolve, reject);
-    }, 100);
-  });
+  return new Promise(pollForLoginStatus);
 };
 
 export const getLikes = (userId, accessToken) => {

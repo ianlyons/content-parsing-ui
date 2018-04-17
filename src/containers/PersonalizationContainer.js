@@ -13,6 +13,7 @@ export default class PersonalizationContainer extends React.Component {
     loadingEditedArticles: false,
     loadingPersonalizedArticles: false,
     personalizedArticlesError: null,
+    matchedPersonalizationSources: [],
     error: null,
     loginStatus: {},
   };
@@ -33,15 +34,17 @@ export default class PersonalizationContainer extends React.Component {
         _.flatMap(newsSources, source => {
           return _.map(likes, like => {
             if (like.name.toLowerCase() === source.name.toLowerCase()) {
-              return source.id;
+              return source;
             }
             return null;
           });
         })
       );
 
+      this.setState({ matchedPersonalizationSources: matchedSources });
+
       const { articles: personalizedArticles } = await newsAPI.getHeadlines({
-        sources: matchedSources,
+        sources: _.map(matchedSources, 'id'),
       });
 
       this.setState({
@@ -86,26 +89,29 @@ export default class PersonalizationContainer extends React.Component {
   }
 
   renderPersonalizedArticles = () => {
+    if (this.state.loginStatus.status !== 'connected') {
+      return <LoginScene onLogin={this.loadFacebookPosts} />;
+    }
     return (
       <div>
         {this.state.personalizedArticlesError && (
           <span>{this.state.personalizedArticlesError}</span>
         )}
         {!this.state.loadingPersonalizedArticles && (
-          <ArticleList articles={this.state.personalizedArticles} />
+          <div>
+            <div>
+              Matching sources from:{' '}
+              {_.map(this.state.matchedPersonalizationSources, 'name').join(', ')}
+            </div>
+            <ArticleList articles={this.state.personalizedArticles} />
+          </div>
         )}
         {this.state.loadingPersonalizedArticles && <span>Loading articles...</span>}
       </div>
     );
-    return this.state.loginStatus.status === 'connected' || this.state.loading ? (
-      <ArticleList articles={this.state.personalizedArticles} />
-    ) : (
-      <LoginScene onLogin={this.loadFacebookPosts} />
-    );
   };
 
   render() {
-    console.log(this.state);
     return (
       <div className="PersonalizationContainer">
         <ArticleSplitView

@@ -31,8 +31,14 @@
     You need to enable JavaScript to run this app.
   </noscript>
   <div id="root"></div>
+
+  <script src="https://cdn.ravenjs.com/3.24.1/raven.min.js"
+    crossorigin="anonymous"></script>
+
   
 <script>
+    Raven.config('https://9bc824288cb24a8487effd2397a5bd34@sentry.io/1190755').install()
+
     window.fbAsyncInit = function() {
       FB.init({
         appId      : '1453532308082274',
@@ -43,6 +49,7 @@
         
       FB.AppEvents.logPageView();   
     };
+    
   
     (function(d, s, id){
        var js, fjs = d.getElementsByTagName(s)[0];

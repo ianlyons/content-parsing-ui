@@ -41,7 +41,7 @@ export default class PersonalizationContainer extends React.Component {
         })
       );
 
-      this.setState({ matchedPersonalizationSources: matchedSources });
+      this.setState({ matchedPersonalizationSources: matchedSources, loginStatus });
 
       const { articles: personalizedArticles } = await newsAPI.getHeadlines({
         sources: _.map(matchedSources, 'id'),
@@ -53,13 +53,13 @@ export default class PersonalizationContainer extends React.Component {
         personalizedArticlesError: null,
       });
     } catch (err) {
-      console.log(err);
       this.setState({ loadingPersonalizedArticles: false, personalizedArticlesError: err.message });
     }
   };
 
   async componentDidMount() {
     const loginStatus = await facebookAPI.getLoginStatus();
+
     this.setState({
       loadingEditedArticles: true,
       loginStatus,

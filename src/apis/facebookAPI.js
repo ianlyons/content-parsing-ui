@@ -1,12 +1,18 @@
 import baseRequest from './baseRequest';
 
 const getLoginStatusBody = (resolve, reject) => {
-  window.FB.getLoginStatus(resolve, reject);
+  try {
+    window.FB.getLoginStatus(function(response) {
+      resolve(response);
+    });
+  } catch (err) {
+    reject(err);
+  }
 };
 
 const pollForLoginStatus = (resolve, reject) => {
   if (!window.FB) {
-    console.log('Facebook script not loaded... re-polling.');
+    console && console.log('Facebook script not loaded... re-polling.');
     setTimeout(() => pollForLoginStatus(resolve, reject), 100);
   } else {
     getLoginStatusBody(resolve, reject);

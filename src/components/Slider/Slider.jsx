@@ -4,18 +4,16 @@ import './Slider.css';
 
 export default class Slider extends React.Component {
   render() {
-    const { onChange, labelLeft, labelRight, id } = this.props;
+    const { onChange, labelLeft, labelRight, id, color } = this.props;
     return (
-      <div className="Slider">
-        <input min={0} max={10} step={1} id={id} onChange={onChange} type="range" />
-        <div className="Slider-labelWrapper">
-          <label className="Slider-label" htmlFor={id}>
-            {labelLeft}
-          </label>
-          <label className="Slider-label" htmlFor={id}>
-            {labelRight}
-          </label>
-        </div>
+      <div className={`Slider Slider--${color}`}>
+        <label className="Slider-label" htmlFor={id}>
+          {labelLeft}
+        </label>
+        <input className="Slider-input" min={0} max={10} step={1} id={id} onChange={onChange} type="range" />
+        <label className="Slider-label" htmlFor={id}>
+          {labelRight}
+        </label>
       </div>
     );
   }
@@ -26,4 +24,5 @@ Slider.propTypes = {
   labelLeft: PropTypes.string,
   labelRight: PropTypes.string,
   id: PropTypes.string,
+  color: PropTypes.string, // supported are `blue` and `green`
 };

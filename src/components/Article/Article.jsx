@@ -9,14 +9,14 @@ const normalizeUrl = (url) => {
 }
 
 const getStyle = (url) => {
-  if (!url) return {};
+if (!url) return {};
   return { backgroundImage: `url(${normalizeUrl(url)})`};
 }
 
 export default class Article extends React.Component {
   render() {
     const { imgSrc, headline, url, source } = this.props;
-    
+
     return (
       <article className="Article">
         <div className="Article-contentWrapper" style={getStyle(imgSrc)}>

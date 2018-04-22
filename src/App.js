@@ -3,10 +3,12 @@ import * as _ from 'lodash';
 import FilterBar from './components/FilterBar/FilterBar';
 import Article from './components/Article/Article';
 import * as newsQueryUtils from './utils/newsQueryUtils';
+import * as loading from './loading_io.gif';
 import './App.css';
 
 class App extends Component {
   state = {
+    querying: false,
     publisher: 50,
     personalization: null, // this turns into a number when the user logs into facebook
     personalizationSources: [],
@@ -25,9 +27,13 @@ class App extends Component {
   };
 
   updatePersonalizationSources = sources => {
-    this.setState({
-      personalizationSources: sources,
-    });
+    this.setState(
+      {
+        personalizationSources: sources,
+        personalization: 50,
+      },
+      this.queryArticles
+    );
   };
 
   componentDidMount() {
@@ -35,6 +41,7 @@ class App extends Component {
   }
 
   queryArticles = async () => {
+    this.setState({ querying: true });
     const {
       personalization: personalizationScore,
       publisher: tradPublisherScore,
@@ -52,8 +59,9 @@ class App extends Component {
       );
 
       const articles = _.shuffle(_.flatMap(res, 'articles'));
-      this.setState({ articles });
+      this.setState({ articles, querying: false });
     } catch (err) {
+      this.setState({ querying: false });
       console.error(err);
     }
   };
@@ -70,7 +78,12 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">A News Tool</h1>
+          <h1 className="App-title">
+            A News Tool{' '}
+            {this.state.querying && (
+              <img className="App-loadingImg" src={loading} alt="" aria-hidden="true" />
+            )}
+          </h1>
           <h2 className="App-subtitle">Adjust the sliders, tune your news.</h2>
           <h2 className="App-subtitle">
             Powered by&nbsp;
@@ -82,7 +95,12 @@ class App extends Component {
         <div className="App-body">
           <div className="App-articleWrapper">
             {this.state.articles.map((article, i) => (
-              <Article key={i} headline={article.title} source={article.source.name} />
+              <Article
+                key={i}
+                headline={article.title}
+                source={article.source.name}
+                url={article.url}
+              />
             ))}
           </div>
 
@@ -90,6 +108,7 @@ class App extends Component {
             <FilterBar
               onSliderChange={this.updateSliderValue}
               onSourcesChange={this.updatePersonalizationSources}
+              matchedSources={this.state.personalizationSources}
             />
           </div>
         </div>

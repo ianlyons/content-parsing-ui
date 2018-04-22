@@ -16,8 +16,7 @@ export default class FilterBar extends React.Component {
   };
 
   loadPersonalizedSources = async () => {
-    this.setState({ loadingPersonalizedArticles: true });
-
+    const { onSourcesChange } = this.props;
     try {
       const loginStatus = await facebookAPI.getLoginStatus();
       const likes = await facebookAPI.getAllLikes(
@@ -38,19 +37,9 @@ export default class FilterBar extends React.Component {
         })
       );
 
-      
-
-      const { articles: personalizedArticles } = await newsAPI.getHeadlines({
-        sources: _.map(matchedSources, 'id'),
-      });
-
-      this.setState({
-        personalizedArticles,
-        loadingPersonalizedArticles: false,
-        personalizedArticlesError: null,
-      });
+      onSourcesChange(matchedSources);
     } catch (err) {
-      this.setState({ loadingPersonalizedArticles: false, personalizedArticlesError: err.message });
+      this.setState({ error: 'Error loading personalized sources.' });
     }
   };
 
@@ -58,7 +47,6 @@ export default class FilterBar extends React.Component {
     const loginStatus = await facebookAPI.getLoginStatus();
 
     this.setState({
-      loadingEditedArticles: true,
       loginStatus,
     });
 
@@ -69,10 +57,10 @@ export default class FilterBar extends React.Component {
 
   renderPersonalizationFilter = () => {
     if (this.state.loginStatus.status !== 'connected') {
-      return <LoginScene onLogin={this.loadFacebookPosts} />;
+      return <LoginScene onLogin={this.loadPersonalizedSources} />;
     }
 
-    const { onSliderChange } = this.props;
+    const { onSliderChange, matchedSources } = this.props;
     return (
       <div>
         <Slider
@@ -82,10 +70,12 @@ export default class FilterBar extends React.Component {
           id="personalization"
           onChange={onSliderChange}
         />
-          <div>
-              Matching sources from:{' '}
-              {_.map(this.state.matchedPersonalizationSources, 'name').join(', ')}
+        {
+          matchedSources.length > 0 &&
+          <div className="FilterBar-matchedSources">
+            Matching sources from:&nbsp;{_.map(matchedSources, 'name').join(', ')}
           </div>
+        }
       </div>
     );
   };
@@ -111,5 +101,6 @@ export default class FilterBar extends React.Component {
 
 FilterBar.propTypes = {
   onSliderChange: PropTypes.func,
-  onSourcesChange: PropTypes.func
+  onSourcesChange: PropTypes.func,
+  matchedSources: PropTypes.arrayOf(PropTypes.object)
 }

@@ -70,16 +70,12 @@ class App extends Component {
   // million requests as users slide the bar.
   debouncedQueryArticles = _.debounce(this.queryArticles, 150, { leading: false });
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
-
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">
-            A News Tool{' '}
+            A News Tool&nbsp;
             {this.state.querying && (
               <img className="App-loadingImg" src={loading} alt="" aria-hidden="true" />
             )}

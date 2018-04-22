@@ -1,11 +1,13 @@
 .Article {
-  width: 250px;
+  width: 300px;
   height: 130px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: solid #dadada 1px;
-  border-radius: 3px;
+  border: solid #979797 1px;
+  border-radius: 6px;
+  font-family: 'Helvetica Neue', Roboto, sans-serif;
+  padding: 5px;
 }
 
 .Article-contentWrapper {
@@ -18,18 +20,23 @@
   width: 100%;
 }
 
-.Article-footer {
-  background-color: #fafafa;
+.Article-header {
+  text-align: left;
+  font-family: 'Helvetica Neue', Roboto, sans-serif;
   width: 100%;
   padding: 3px;
-  font-size: 8px;
+  font-size: 12px;
+  border-bottom: solid #979797 1px;
+  text-transform: uppercase;
+  color: #979797;
 }
 
 .Article-headline {
+  text-align: left;
+  font-family: 'Helvetica Neue', Roboto, sans-serif;
   font-weight: 300;
   font-size: 15px;
-  color: white;
-  text-shadow: 1px 1px 3px #4d4d4d;
+  color: #979797;
   margin-right: 10px;
 }
 

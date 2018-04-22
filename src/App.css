@@ -2,28 +2,59 @@
   text-align: center;
 }
 
+.App-loadingImg {
+  height: 25px;
+}
+
 .App-header {
-  background-color: #dadada;
   padding: 20px;
   color: #4a4a4a;
+  text-align: left;
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 1.75em;
+  font-weight: 700;
   margin-bottom: 0;
+  text-transform: uppercase;
 }
 
-.App-attribution {
-  font-size: 10px;
-  margin-bottom: 25px;
+.App-subtitle {
+  font-size: 1.2em;
+  font-weight: 300;
+  margin: 0;
+  text-transform: uppercase;
 }
 
-.App-nav {
-  padding: 10px;
+.App-subtitle a {
+  color: #4a4a4a;
+  text-decoration: none;
+}
+
+.App-sliderContainer {
+  padding: 8px;
+  background-color: #F6F6F6;
   width: 100%;
-  border-bottom: solid grey 1px;
+  position: fixed;
+  bottom: 10px;
+  left: 0;
+  right: 0;
 }
 
-.App-nav > *:first-child {
-  margin-right: 5px;
+.App-articleWrapper {
+  padding: 20px;
+  margin-bottom: 120px; /* for the slider container */
+}
+
+.App-articleWrapper > * {
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+/* Clear the floats */
+.App-articleWrapper:after {
+  content: "";
+  display: table;
+  clear: both;
 }

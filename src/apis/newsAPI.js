@@ -37,6 +37,8 @@ export const getHeadlines = (params = {}) => {
     allParams.sources = allParams.sources.join(',');
   }
 
+  console.info(`Querying with params: ${JSON.stringify(allParams, undefined, 2)}`);
+
   return baseRequest('/top-headlines', allParams);
 };
 

@@ -35,3 +35,20 @@
   left: 0;
   right: 0;
 }
+
+.App-articleWrapper {
+  padding: 20px;
+}
+
+.App-articleWrapper > * {
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+/* Clear the floats */
+.App-articleWrapper:after {
+  content: "";
+  display: table;
+  clear: both;
+}

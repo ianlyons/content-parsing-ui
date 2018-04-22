@@ -11,7 +11,7 @@ export default class Slider extends React.Component {
           {labelLeft}
         </label>
         <input className={`Slider-input Slider-input--${color}`} min={0} max={100} step={1} id={id} onChange={onChange} type="range" />
-        <label className="Slider-label" htmlFor={id}>
+        <label className="Slider-label Slider-labelRight" htmlFor={id}>
           {labelRight}
         </label>
       </div>

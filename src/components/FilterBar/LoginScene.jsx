@@ -9,7 +9,7 @@ export default class LoginScene extends React.Component {
       <div className="LoginScene">
         <div className="LoginScene-prompt">
           We'd like to use your Facebook account to serve you content that's personalized to things
-          you've Liked. Please log in using the dialog below:
+          you've Liked. Please log in!
         </div>
         <FacebookLogin
           fields="public_profile,email,user_likes"

@@ -1,0 +1,12 @@
+.LoginScene {
+  display: flex;
+  align-items: center;
+}
+
+.LoginScene-prompt {
+  text-align: left;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 12px;
+  margin-right: 10px;
+}

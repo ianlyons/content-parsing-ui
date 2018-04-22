@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import * as _ from 'lodash';
-// import SectionButton from './components/SectionButton/SectionButton';
-// import PublisherContainer from './containers/PublisherContainer';
-// import PersonalizationContainer from './containers/PersonalizationContainer';
-import Slider from './components/Slider/Slider';
+import FilterBar from './components/FilterBar/FilterBar';
 import Article from './components/Article/Article';
 import * as newsQueryUtils from './utils/newsQueryUtils';
 import './App.css';
 
 class App extends Component {
   state = {
-    personalization: 50,
     publisher: 50,
+    personalization: null, // this turns into a number when the user logs into facebook
+    personalizationSources: [],
     loginStatus: null,
     articles: [],
   };
@@ -26,18 +24,31 @@ class App extends Component {
     );
   };
 
+  updatePersonalizationSources = sources => {
+    this.setState({
+      personalizationSources: sources,
+    });
+  };
+
   componentDidMount() {
     this.queryArticles();
   }
 
   queryArticles = async () => {
-    const { personalization: personalizationScore, publisher: tradPublisherScore } = this.state;
+    const {
+      personalization: personalizationScore,
+      publisher: tradPublisherScore,
+      personalizationSources,
+    } = this.state;
     try {
       const res = await Promise.all(
-        newsQueryUtils.getQueries({
-          personalizationScore,
-          tradPublisherScore,
-        })
+        newsQueryUtils.getQueries(
+          {
+            personalizationScore,
+            tradPublisherScore,
+          },
+          personalizationSources
+        )
       );
 
       const articles = _.shuffle(_.flatMap(res, 'articles'));
@@ -76,19 +87,9 @@ class App extends Component {
           </div>
 
           <div className="App-sliderContainer">
-            <Slider
-              color="blue"
-              labelLeft="Untraditional publisher"
-              labelRight="Established publisher"
-              id="publisher"
-              onChange={this.updateSliderValue}
-            />
-            <Slider
-              color="green"
-              labelLeft="Personalization algorithm"
-              labelRight="Human editors"
-              id="personalization"
-              onChange={this.updateSliderValue}
+            <FilterBar
+              onSliderChange={this.updateSliderValue}
+              onSourcesChange={this.updatePersonalizationSources}
             />
           </div>
         </div>

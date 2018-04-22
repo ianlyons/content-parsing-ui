@@ -1,3 +1,22 @@
+import * as newsAPI from '../apis/newsAPI';
+
+export const getQueries = ({ personalizationScore, tradPublisherScore }) => {
+  const editorsScore = 100 - personalizationScore;
+  const untradPublisherScore = 100 - tradPublisherScore;
+
+  // We have four queries to issue, one for each human-edited articles, personalized articles,
+  // traditional publishers, and nontraditional publishers. We return a mix of articles based on that.
+  return [
+    // untrad publishers
+    newsAPI.getEverything('a', { pageSize: untradPublisherScore }),
+    // trad publishers
+    newsAPI.getHeadlines({
+      pageSize: tradPublisherScore,
+      sources: ['usa-today', 'the-new-york-times', 'nbc-news'],
+    }),
+  ];
+};
+
 /*
 
 The query params returned from this function are passed directly to the /everything API of newsapi.org.
@@ -25,9 +44,6 @@ export const getQueryParams = queryConfig => {
   const geography = parseInt(queryConfig.geography, 10);
   const publisherType = parseInt(queryConfig.publisherType || 5, 10);
   const personalization = parseInt(queryConfig.personalization || 5, 10);
-  console.log('geography is: ', geography);
-  console.log('publisherType is: ', publisherType);
-  console.log('personalization is: ', personalization);
 
   const sortBy = (() => {
     // If we want human editors

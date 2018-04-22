@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import * as _ from 'lodash';
 // import SectionButton from './components/SectionButton/SectionButton';
 // import PublisherContainer from './containers/PublisherContainer';
 // import PersonalizationContainer from './containers/PersonalizationContainer';
 import Slider from './components/Slider/Slider';
 import Article from './components/Article/Article';
+import * as newsQueryUtils from './utils/newsQueryUtils';
 import './App.css';
 
 class App extends Component {
@@ -11,44 +13,43 @@ class App extends Component {
     personalization: 50,
     publisher: 50,
     loginStatus: null,
+    articles: [],
   };
 
   updateSliderValue = e => {
     const { id: inputId, value } = e.target;
-    this.setState({
-      [inputId]: parseInt(value, 10),
-    });
+    this.setState(
+      {
+        [inputId]: parseInt(value, 10),
+      },
+      this.debouncedQueryArticles
+    );
   };
 
-  getCurrentArticles = () => {
-    return [
-      {
-        headline: 'Something happened this morning!!111',
-        source: 'Washington Post',
-        url: 'https://yahoo.com',
-      },
-      {
-        headline: 'Something happened this morning!!111',
-        source: 'Washington Post',
-        url: 'https://yahoo.com',
-      },
-      {
-        headline: 'Something happened this morning!!111',
-        source: 'Washington Post',
-        url: 'https://yahoo.com',
-      },
-      {
-        headline: 'Something happened this morning!!111',
-        source: 'Washington Post',
-        url: 'https://yahoo.com',
-      },
-      {
-        headline: 'Something happened this morning!!111',
-        source: 'Washington Post',
-        url: 'https://yahoo.com',
-      },
-    ];
+  componentDidMount() {
+    this.queryArticles();
+  }
+
+  queryArticles = async () => {
+    const { personalization: personalizationScore, publisher: tradPublisherScore } = this.state;
+    try {
+      const res = await Promise.all(
+        newsQueryUtils.getQueries({
+          personalizationScore,
+          tradPublisherScore,
+        })
+      );
+
+      const articles = _.shuffle(_.flatMap(res, 'articles'));
+      this.setState({ articles });
+    } catch (err) {
+      console.error(err);
+    }
   };
+
+  // Creating a debounced version for updateSliderValue to reference so we don't fire a
+  // million requests as users slide the bar.
+  debouncedQueryArticles = _.debounce(this.queryArticles, 150, { leading: false });
 
   componentDidUpdate() {
     console.log(this.state);
@@ -69,7 +70,9 @@ class App extends Component {
         </header>
         <div className="App-body">
           <div className="App-articleWrapper">
-            {this.getCurrentArticles().map((article, i) => <Article {...article} />)}
+            {this.state.articles.map((article, i) => (
+              <Article key={i} headline={article.title} source={article.source.name} />
+            ))}
           </div>
 
           <div className="App-sliderContainer">

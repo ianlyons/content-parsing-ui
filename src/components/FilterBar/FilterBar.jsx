@@ -57,7 +57,8 @@ export default class FilterBar extends React.Component {
 
   renderPersonalizationFilter = () => {
     if (this.state.loginStatus.status !== 'connected') {
-      return <LoginScene onLogin={this.loadPersonalizedSources} />;
+
+      return <div className="FilterBar-loginWrapper"><LoginScene onLogin={this.loadPersonalizedSources} /></div>;
     }
 
     const { onSliderChange, matchedSources } = this.props;

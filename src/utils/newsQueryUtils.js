@@ -17,7 +17,13 @@ export const getQueries = (
     // trad publishers
     newsAPI.getHeadlines({
       pageSize: tradPublisherScore,
-      sources: ['usa-today', 'the-new-york-times', 'nbc-news'],
+      sources: [
+        'bbc-news',
+        'bloomberg',
+        'the-wall-street-journal',
+        'the-new-york-times',
+        'the-washington-post',
+      ],
     }),
     // human editors
     !_.isNil(personalizationScore) &&

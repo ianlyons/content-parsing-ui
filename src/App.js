@@ -58,7 +58,7 @@ class App extends Component {
         )
       );
 
-      const articles = _.shuffle(_.flatMap(res, 'articles'));
+      const articles = _.compact(_.shuffle(_.flatMap(res, 'articles')));
       this.setState({ articles, querying: false });
     } catch (err) {
       this.setState({ querying: false });

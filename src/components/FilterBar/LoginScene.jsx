@@ -12,9 +12,10 @@ export default class LoginScene extends React.Component {
           you've Liked. Please log in!
         </div>
         <FacebookLogin
-          fields="public_profile,email,user_likes"
+          fields="public_profile,email"
           callback={onLogin}
           autoLoad={true}
+          scope="user_likes"
           appId="1453532308082274"
         />
       </div>

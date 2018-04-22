@@ -24,6 +24,8 @@ export default class FilterBar extends React.Component {
         loginStatus.authResponse.accessToken
       );
 
+      console.log('likes is: ', likes);
+
       const { sources: newsSources } = await newsAPI.getSources();
 
       const matchedSources = _.compact(

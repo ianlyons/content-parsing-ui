@@ -51,7 +51,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "deploy": "npm run build && surge ./build news-content-parsing.surge.sh"
+    "deploy": "npm run build && surge ./build news-tool.surge.sh"
   },
   "jest": {
     "collectCoverageFrom": [

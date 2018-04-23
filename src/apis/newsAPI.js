@@ -73,7 +73,6 @@ export const getEverything = (query, params = {}) => {
 export const getSources = (params = {}) => {
   const allParams = Object.assign(
     {
-      country: 'us',
       language: 'en',
     },
     params

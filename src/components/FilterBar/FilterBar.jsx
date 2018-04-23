@@ -16,6 +16,7 @@ export default class FilterBar extends React.Component {
   };
 
   loadPersonalizedSources = async () => {
+    console.log('Login success! Loading personalized sources...');
     const { onSourcesChange } = this.props;
     try {
       const loginStatus = await facebookAPI.getLoginStatus();
@@ -23,8 +24,6 @@ export default class FilterBar extends React.Component {
         loginStatus.authResponse.userID,
         loginStatus.authResponse.accessToken
       );
-
-      console.log('likes is: ', likes);
 
       const { sources: newsSources } = await newsAPI.getSources();
 

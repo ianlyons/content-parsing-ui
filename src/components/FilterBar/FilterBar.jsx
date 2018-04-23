@@ -20,6 +20,9 @@ export default class FilterBar extends React.Component {
     const { onSourcesChange } = this.props;
     try {
       const loginStatus = await facebookAPI.getLoginStatus();
+      this.setState({
+        loginStatus
+      });
       const likes = await facebookAPI.getAllLikes(
         loginStatus.authResponse.userID,
         loginStatus.authResponse.accessToken
@@ -58,7 +61,6 @@ export default class FilterBar extends React.Component {
 
   renderPersonalizationFilter = () => {
     if (this.state.loginStatus.status !== 'connected') {
-
       return <div className="FilterBar-loginWrapper"><LoginScene onLogin={this.loadPersonalizedSources} /></div>;
     }
 
